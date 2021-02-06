@@ -129,6 +129,9 @@ public class ScreenMediaRecorder {
         int refereshRate = (int) wm.getDefaultDisplay().getRefreshRate();
         int vidBitRate = screenHeight * screenWidth * refereshRate / VIDEO_FRAME_RATE
                 * VIDEO_FRAME_RATE_TO_RESOLUTION_RATIO;
+        int maxRefreshRate = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_screenRecorderMaxFramerate);
+        if (maxRefreshRate != 0 && refereshRate > maxRefreshRate) refereshRate = maxRefreshRate;
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setVideoEncodingProfileLevel(
                 MediaCodecInfo.CodecProfileLevel.AVCProfileMain,
